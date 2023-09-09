@@ -62,14 +62,8 @@ function extractTags(filepath, data) {
 
 async function minifyJs(data) {
   var combined = data.template + " " + data.script;
-  // only minify js in production
-  var env = process.argv[2] || "dev";
-  if (env == "dev") {
-    fs.writeFileSync(public_folder + "/assets/app.min.js", combined, "utf8");
-  } else {
-    var result = await minify(combined, {
-      sourceMap: true,
-    });
-    fs.writeFileSync(public_folder + "/assets/app.min.js", result.code, "utf8");
-  }
+  var result = await minify(combined, {
+    sourceMap: true,
+  });
+  fs.writeFileSync(public_folder + "/assets/app.min.js", result.code, "utf8");
 }
