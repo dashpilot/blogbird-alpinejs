@@ -41,7 +41,7 @@
 
           <template x-for="key in Object.keys($store.app.curItem)">
             <div>
-              <template x-if="getType(key) == 'text'">
+              <template x-if="getType(key) == 'txt'">
                 <div x-show="$store.app.curTab=='text'">
                   <div class="label" x-text="key"></div>
                   <input
@@ -52,7 +52,7 @@
                 </div>
               </template>
 
-              <template x-if="getType(key) == 'html'">
+              <template x-if="getType(key) == 'rte'">
                 <div x-show="$store.app.curTab=='text'">
                   <div class="label" x-text="key"></div>
                   <div
@@ -63,16 +63,14 @@
                 </div>
               </template>
 
-              <template x-if="getType(key) == 'select'">
+              <template x-if="getType(key) == 'sel'">
                 <div x-show="$store.app.curTab=='options'">
                   <div class="label" x-text="key"></div>
                   <select
                     class="wdgt-form-select"
                     x-model="$store.app.curItem[key]"
                   >
-                    <template
-                      x-for="opt in data.fields.filter(x=>x.key==key)[0].options"
-                    >
+                    <template x-for="opt in $store.app.curLayout.options[key]">
                       <option
                         :value="opt"
                         x-text="opt"
@@ -176,6 +174,9 @@
             console.log(cur);
 
             Alpine.store("app").curItem = cur;
+            Alpine.store("app").curLayout = data.layouts.filter(
+              (x) => x.name == cur.layout
+            )[0];
             Alpine.store("app").curTab = "text";
 
             setTimeout(() => {
@@ -196,10 +197,18 @@
         });
       },
       getType(key) {
-        var type = this.data.fields.filter((x) => x.key == key)[0];
-        if (type) {
-          type = type.type;
-          return type;
+        if (Alpine.store("app").curLayout) {
+          var curLayout = Alpine.store("app").curLayout;
+
+          var type = curLayout.fields[key];
+
+          console.log(Alpine.store("app").curLayout);
+
+          if (type) {
+            return type;
+          } else {
+            return false;
+          }
         } else {
           return false;
         }
@@ -273,6 +282,7 @@
     Alpine.store("app", {
       curTab: "text",
       curItem: false,
+      curLayout: false,
       curKey: false,
     });
   });
@@ -653,6 +663,7 @@
       box-shadow 0.15s ease-in-out;
     width: 175px;
     margin-bottom: 15px;
+    padding: 5px 15px;
   }
 
   .wdgt-form-select-sm {
