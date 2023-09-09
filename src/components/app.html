@@ -218,6 +218,8 @@
         document.querySelector("#fileInput").click();
       },
       async save() {
+        console.log(this.data);
+
         const rawResponse = await fetch("api/save.php", {
           method: "POST",
           headers: {
@@ -272,8 +274,25 @@
           Alpine.store("app").curItem = false;
         }
       },
-      makeId() {
-        return Date.now();
+      addPost(layout) {
+        let myLayout = this.data.layouts.filter((x) => x.name == layout)[0];
+        let newItem = {};
+        newItem.id = Date.now();
+        newItem.layout = layout;
+        Object.entries(myLayout.fields).forEach((item) => {
+          let key = item[0];
+          let type = item[1];
+          if (type == "img") {
+            newItem[key] = [];
+          } else {
+            newItem[key] = "";
+          }
+        });
+        this.data.posts.push(newItem);
+
+        Alpine.store("app").curItem = newItem;
+        Alpine.store("app").curLayout = myLayout;
+        Alpine.store("app").curTab = "text";
       },
     };
   }
@@ -308,6 +327,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
+    z-index: 99999999;
   }
 
   .wdgt-show {

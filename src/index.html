@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -8,14 +8,13 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
     />
 
-  
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-   
+
     <script src="https://unpkg.com/alpinejs" defer></script>
 
     <link
@@ -27,63 +26,33 @@
   </head>
 
   <body>
-    
-    
     <div x-data="app()" class="container mt-5">
-    
-    
       <template x-if="data.posts">
-        <div>  
-      
-      <section id="1" class="editable">
-        <div class="row">
-            <div class="col-4">
-              
-         <template x-if="data.posts[0].images[0]">
-            <img :src="data.posts[0].images[0].filename" src="img/astronaut2.png" class="img-fluid" />
-         </template>
-          
-    
-          </div>
-            <div class="col-8 d-flex align-items-center">
-                <div>
-                  <div x-text="data.posts[0].draft"></div>
-                <h2 x-text="data.posts[0].title">Hello world</h2>
-                <p x-html="data.posts[0].body"><div>Lorem ipsum dolor site amet. How are you doing? Hello</div><div>This is some more text.<br></div></p>
-            </div>
-            </div>
+        <div>
+          <template x-for="item in data.posts">
+            <section :id="item.id" class="editable">
+              <div class="row">
+                <div class="col-4">
+                  <template x-if="item.images[0]">
+                    <img :src="item.images[0].filename" class="img-fluid" />
+                  </template>
+                </div>
+                <div class="col-8 d-flex align-items-center">
+                  <div>
+                    <h2 x-text="item.title"></h2>
+                    <div x-html="item.body"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </template>
         </div>
-      </section>
-    
-      
-      <section id="2" class="editable">
-        <div class="row">
-            <div class="col-4">
-              
-         <template x-if="data.posts[1].images[0]">
-            <img :src="data.posts[1].images[0].filename" src="img/1694212674961.jpg" class="img-fluid" />
-         </template>
-          
-    
-          </div>
-            <div class="col-8 d-flex align-items-center">
-                <div>
-                <h2 x-text="data.posts[1].title">Steven Alzate</h2>
-                <p x-html="data.posts[1].body">Dolor site amet lorem</p>
-            </div>
-            </div>
-        </div>
-      </section>
-    
-        </div>
-    </template>
-    
-    
-    
-    <!-- load the components -->
-    <app></app>
-    <upload></upload>
-    
+      </template>
+
+      <!-- load the components -->
+      <app></app>
+      <upload></upload>
+      <dock></dock>
     </div>
 
     <script src="assets/inline.js"></script>
