@@ -1,0 +1,24 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "Hello world",
+      "body": "<div>Lorem ipsum dolor site amet. How are you doing? Hello</div><div>This is some more text.<br></div>",
+      "images": [{ "title": "Hello", "filename": "img/astronaut2.png" }],
+      "draft": false
+    },
+    {
+      "id": "2",
+      "title": "Steven Alzate",
+      "body": "Dolor site amet lorem",
+      "images": [{ "title": "", "filename": "img/1694212674961.jpg" }],
+      "draft": true
+    }
+  ],
+  "fields": [
+    { "key": "title", "type": "text" },
+    { "key": "body", "type": "html" },
+    { "key": "images", "type": "img" },
+    { "key": "draft", "type": "select", "options": [true, false] }
+  ]
+}

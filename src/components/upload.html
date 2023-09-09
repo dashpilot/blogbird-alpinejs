@@ -1,0 +1,89 @@
+<template>
+  <input
+    type="file"
+    id="fileInput"
+    class="fileInput"
+    accept="image/png, image/jpeg, image/gif"
+    hidden
+  />
+</template>
+
+<script>
+  document.getElementById("fileInput").addEventListener("change", function (e) {
+    var img = new Image();
+
+    img.onload = async function () {
+      var canvas = document.createElement("canvas"),
+        ctx = canvas.getContext("2d"),
+        oc = document.createElement("canvas"),
+        octx = oc.getContext("2d");
+
+      canvas.width = cfg.img_width; // destination canvas size
+      canvas.height = (canvas.width * img.height) / img.width;
+
+      var cur = {
+        width: Math.floor(img.width * 0.5),
+        height: Math.floor(img.height * 0.5),
+      };
+      oc.width = cur.width;
+      oc.height = cur.height;
+      octx.drawImage(img, 0, 0, cur.width, cur.height);
+      while (cur.width * 0.5 > cfg.img_width) {
+        cur = {
+          width: Math.floor(cur.width * 0.5),
+          height: Math.floor(cur.height * 0.5),
+        };
+        octx.drawImage(
+          oc,
+          0,
+          0,
+          cur.width * 2,
+          cur.height * 2,
+          0,
+          0,
+          cur.width,
+          cur.height
+        );
+      }
+      ctx.drawImage(
+        oc,
+        0,
+        0,
+        cur.width,
+        cur.height,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+      var base64Image = canvas.toDataURL("image/jpeg");
+
+      console.log(base64Image);
+
+      var filename = Date.now() + ".jpg";
+
+      var rawResponse = await fetch("api/save.php", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "img",
+          filename: filename,
+          data: base64Image,
+        }),
+      });
+      var resp = await rawResponse.json();
+      console.log(resp);
+
+      let key = Alpine.store("app").curKey;
+      Alpine.store("app").curItem[key].push({
+        title: "",
+        filename: "img/" + filename,
+      });
+    };
+
+    img.src = URL.createObjectURL(e.target.files[0]);
+  });
+</script>
