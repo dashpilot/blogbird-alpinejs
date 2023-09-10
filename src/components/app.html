@@ -273,6 +273,9 @@
             (x) => x.id == Alpine.store("app").curItem.id
           );
           this.data.posts.splice(index, 1);
+
+          this.save();
+
           Alpine.store("app").curItem = false;
         }
       },
