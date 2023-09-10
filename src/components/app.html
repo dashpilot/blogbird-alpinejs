@@ -220,7 +220,7 @@
       async save() {
         console.log(this.data);
 
-        const rawResponse = await fetch("api/save.php", {
+        const rawResponse = await fetch("/api/save", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -240,7 +240,7 @@
           );
           Alpine.store("app").curItem[key].splice(index, 1);
 
-          var rawResponse = await fetch("api/delete.php", {
+          var rawResponse = await fetch("/api/delete", {
             method: "POST",
             headers: {
               Accept: "application/json",

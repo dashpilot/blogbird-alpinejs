@@ -62,7 +62,7 @@
 
       var filename = Date.now() + ".jpg";
 
-      var rawResponse = await fetch("api/save.php", {
+      var rawResponse = await fetch("/api/save", {
         method: "POST",
         headers: {
           Accept: "application/json",
