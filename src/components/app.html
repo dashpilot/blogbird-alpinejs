@@ -161,17 +161,15 @@
         this.data = data;
         console.log(data);
 
-        console.log("inited");
+        console.log("init");
 
         // document.querySelector('#backdrop').style.display = 'block';
 
         document.body.addEventListener("click", (ev) => {
           if (ev.target.closest(".editable")) {
             let id = ev.target.closest(".editable").id;
-            console.log(id);
 
             let cur = data.posts.filter((x) => x.id == id)[0];
-            console.log(cur);
 
             Alpine.store("app").curItem = cur;
             Alpine.store("app").curLayout = data.layouts.filter(
@@ -202,7 +200,7 @@
 
           var type = curLayout.fields[key];
 
-          console.log(Alpine.store("app").curLayout);
+          // console.log(Alpine.store("app").curLayout);
 
           if (type) {
             return type;
@@ -282,7 +280,7 @@
       addPost(layout) {
         let myLayout = this.data.layouts.filter((x) => x.name == layout)[0];
         let newItem = {};
-        newItem.id = Date.now();
+        newItem.id = this.newId();
         newItem.layout = layout;
         Object.entries(myLayout.fields).forEach((item) => {
           let key = item[0];
@@ -298,6 +296,13 @@
         Alpine.store("app").curItem = newItem;
         Alpine.store("app").curLayout = myLayout;
         Alpine.store("app").curTab = "text";
+      },
+      newId() {
+        let highest_id = 0;
+        if (this.data.posts.length) {
+          highest_id = Math.max(...this.data.posts.map((x) => x.id));
+        }
+        return highest_id + 1;
       },
     };
   }
@@ -315,7 +320,7 @@
 
         // Get the image file
         var page = doc.querySelector("#page");
-        // console.log(page);
+
         document.querySelector("#page").innerHTML = page.innerHTML;
       })
       .catch(function (err) {
