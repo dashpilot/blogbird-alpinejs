@@ -76,6 +76,7 @@
       });
       var resp = await rawResponse.json();
       console.log(resp);
+      refresh();
 
       let key = Alpine.store("app").curKey;
       Alpine.store("app").curItem[key].push({
