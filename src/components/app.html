@@ -296,6 +296,21 @@
         Alpine.store("app").curItem = newItem;
         Alpine.store("app").curLayout = myLayout;
         Alpine.store("app").curTab = "text";
+
+        setTimeout(() => {
+          // document.querySelector("#rte-body").innerHTML = newItem.body;
+
+          new inLine("#rte-body", {
+            toolbar: [
+              "bold",
+              "italic",
+              "underline",
+              "unorderedList",
+              "orderedList",
+              "link",
+            ],
+          });
+        }, 300);
       },
       newId() {
         let highest_id = 0;
