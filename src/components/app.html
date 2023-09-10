@@ -290,7 +290,7 @@
             newItem[key] = "";
           }
         });
-        this.data.posts.push(newItem);
+        this.data.posts.unshift(newItem);
 
         Alpine.store("app").curItem = newItem;
         Alpine.store("app").curLayout = myLayout;

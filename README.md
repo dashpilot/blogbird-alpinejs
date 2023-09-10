@@ -4,6 +4,6 @@ Frontend for the Blogbird CMS
 
 ## CDN Links:
 
-https://cdn.jsdelivr.net/gh/dashpilot/blogbird-alpinejs@v1.0.7/dist/assets/app.min.js
+https://cdn.jsdelivr.net/gh/dashpilot/blogbird-alpinejs@v1.0.9/dist/assets/app.min.js
 
-https://cdn.jsdelivr.net/gh/dashpilot/blogbird-alpinejs@v1.0.7/dist/assets/app.min.css
+https://cdn.jsdelivr.net/gh/dashpilot/blogbird-alpinejs@v1.0.9/dist/assets/app.min.css
